@@ -19,4 +19,4 @@ here you can add,modify & delete the price configurations,
 
 you can get the total price using API: http://127.0.0.1:5000/calculate_price?distance=n1&duration=n2,
 
-Where n1 is distance in KM and n2 is the duration in time.
+Where n1 is distance in KM and n2 is the duration in Hour.
