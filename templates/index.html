@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+  <div class="mt-4 p-5 text-center bg-primary text-white rounded">
+<h1>Admin Panel</h1>
+  </div>
+<div class="container text-center mt-3 card">
+    <div class="card-header h4">Pricing Configuration</div>
+    <div class="card-body">
+<form action="/add_price" method="POST">
+    <div class="row">
+        <div class="col-6 text-end">
+            <label class="form-label" for="dbp">Distance Base Price(DBP):</label>
+        </div>
+        <div class="col-6 text-start">
+            <input type="number" class="form-control" name="base_price" id="dbp" step="any">RS.
+              UPTO:<input type="number" class="form-control" name="base_distance" step="any">Kms
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-6 text-end">
+            <label class="form-label" for="dap">Distance Additional Price(DAP):</label>
+        </div>
+        <div class="col-6 text-start">
+            <input type="number" name="dap" class="form-control" id="dap" step="any">RS/Km
+
+        </div>
+    </div>
+
+                            <div class="copy hide">
+          <div class="control-group " >
+
+            <div class="row mt-1">
+        <div class="col-6 text-end">
+            <label class="form-label" >Time Multiplier Factor(TMF):</label>
+        </div>
+        <div class="col-4 text-start">
+            <input type="number" name="tmf" class="form-control"  step="any">X
+            UPTO:<input type="number" name="tmf_range" class="form-control"  step="any">Hours
+
+        </div>
+                                                    <div class=" text-start col-sm-2">
+              <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+
+                                    </div>
+
+    </div>
+
+                </div>
+
+            </div>
+
+        <div class=" after-add-more c1">
+
+
+        </div>
+                  <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i>Add TMF</button>
+    <input type="submit" value="Add Price Details" class="btn btn-primary">
+</form>
+    </div>
+</div>
+<div class="mt-2 card container">
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Distance Base Price</th>
+                <th>Distance Additional Price</th>
+                <th>Time Multiplier Factor</th>
+                <th>Status</th>
+                <th colspan="3">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                {% for row in rows %}
+                <td>{{row[1]}}RS.  Upto {{row[2]}}Kms</td>
+                <td>{{row[3]}}Rs/Km</td>
+                <td>{{row[4]}}X Upto {{row[5]}}Hours</td>
+                <td>{{row[6]}}</td>
+                <td>
+                    <form action="/update_status/{{row[0]}}" method="POST">
+                    <select class="form-select" name="status">
+                        <option>Enabled</option>
+                        <option>Disabled</option>
+                    </select>
+                        <input type="submit" class="mt-1 btn btn-primary" value="Update">
+                </form> </td>
+                <td><a href="/edit_price/{{row[0]}}" class="btn btn-warning">Edit</a> </td>
+                <td><a href="/delete_price/{{row[0]}}" class="btn btn-danger">Delete</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+      $(".add-more").click(function(){
+          var html = $(".copy").html();
+          $(".c1").before(html);
+      });
+
+      $(".add-more2").click(function(){
+          var html = $(".copy2").html();
+          $(".c2").before(html);
+      });
+
+      $("body").on("click",".remove",function(){
+          $(this).parents(".control-group").remove();
+      });
+            $("body").on("click",".remove2",function(){
+          $(this).parents(".control-group2").remove();
+      });
+
+    });
+
+</script>
+</body>
+</html>
